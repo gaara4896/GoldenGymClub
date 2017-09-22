@@ -52,6 +52,7 @@ public class MemberDetailsDialog extends javax.swing.JFrame {
         txt_phone = new javax.swing.JLabel();
         txt_membership = new javax.swing.JLabel();
         btn_edit = new javax.swing.JButton();
+        btn_check_record = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,6 +101,13 @@ public class MemberDetailsDialog extends javax.swing.JFrame {
             }
         });
 
+        btn_check_record.setText("Check payment record");
+        btn_check_record.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_check_recordActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -123,18 +131,20 @@ public class MemberDetailsDialog extends javax.swing.JFrame {
                             .addComponent(jLabel3)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(btn_make_payment)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btn_edit)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btn_close))
-                        .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel4)
                                 .addComponent(jLabel6)
                                 .addComponent(txt_phone))
                             .addGap(144, 144, 144))
-                        .addComponent(txt_membership, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addComponent(txt_membership, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btn_edit)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_close))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(btn_make_payment)
+                                .addComponent(btn_check_record)))))
                 .addContainerGap(60, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -163,11 +173,14 @@ public class MemberDetailsDialog extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txt_membership)
                 .addGap(30, 30, 30)
+                .addComponent(btn_make_payment)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_check_record)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_close)
-                    .addComponent(btn_edit)
-                    .addComponent(btn_make_payment))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btn_edit))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
@@ -190,6 +203,13 @@ public class MemberDetailsDialog extends javax.swing.JFrame {
         new EditMemberDetails(member).show();
         
     }//GEN-LAST:event_btn_editActionPerformed
+
+    private void btn_check_recordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_check_recordActionPerformed
+        // TODO add your handling code here:
+        
+        new PaymentRecordPage(member).show();
+        
+    }//GEN-LAST:event_btn_check_recordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -227,6 +247,7 @@ public class MemberDetailsDialog extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_check_record;
     private javax.swing.JButton btn_close;
     private javax.swing.JButton btn_edit;
     private javax.swing.JButton btn_make_payment;
