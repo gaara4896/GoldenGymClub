@@ -42,13 +42,13 @@ public class GoldenGymClub extends JApplet {
                 } catch (Exception e) {
                 }
                 
-                JFrame frame = new JFrame("JavaFX 2 in Swing");
+                JFrame frame = new AdminLoginPage();
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 
                 JApplet applet = new GoldenGymClub();
                 applet.init();
                 
-                frame.setContentPane(applet.getContentPane());
+                //frame.setContentPane(applet.getContentPane());
                 
                 frame.pack();
                 frame.setLocationRelativeTo(null);
@@ -62,16 +62,16 @@ public class GoldenGymClub extends JApplet {
     @Override
     public void init() {
         fxContainer = new JFXPanel();
-        fxContainer.setPreferredSize(new Dimension(JFXPANEL_WIDTH_INT, JFXPANEL_HEIGHT_INT));
+        //fxContainer.setPreferredSize(new Dimension(JFXPANEL_WIDTH_INT, JFXPANEL_HEIGHT_INT));
         add(fxContainer, BorderLayout.CENTER);
         // create JavaFX scene
-        Platform.runLater(new Runnable() {
+        /*Platform.runLater(new Runnable() {
             
             @Override
             public void run() {
                 createScene();
             }
-        });
+        });*/
     }
     
     private void createScene() {
