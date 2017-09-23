@@ -5,6 +5,7 @@
  */
 package goldengymclub;
 
+import goldengymclub.database.Database;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,12 +21,11 @@ public class AdminLoginPage extends javax.swing.JFrame {
         initComponents();
     }
     
-    public boolean adminLogin(String username, String password){
+    public boolean adminLogin(Admin admin){
         
-        //check for admin username and password
-        //return true if valid false if not valid
+        Database db = Database.getInstance();
+        return db.searchAdmin(admin);
         
-        return false;
     }
 
     /**
@@ -117,7 +117,7 @@ public class AdminLoginPage extends javax.swing.JFrame {
         String username = txt_username.getText().toString();
         String password = txt_password.getText().toString();
         
-        boolean login_success = adminLogin(username, password);
+        boolean login_success = adminLogin(new Admin(username, password));
         
         if(login_success){
             new SelectActionPage().show();
