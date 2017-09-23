@@ -5,6 +5,10 @@
  */
 package goldengymclub;
 
+import goldengymclub.util.Deluxe;
+import goldengymclub.util.Member;
+import goldengymclub.util.NonDeluxe;
+
 /**
  *
  * @author Neoh
@@ -25,7 +29,13 @@ public class MemberDetailsDialog extends javax.swing.JFrame {
         txt_fullname.setText(member.getFirstname() + " " + member.getLastname());
         txt_email.setText(member.getEmail());
         txt_phone.setText(member.getPhone());
-        //txt_membership.setText(member.getMembership());
+        if(member.getMembership() instanceof Deluxe){
+            txt_membership.setText("Deluxe");
+        } else if(member.getMembership() instanceof NonDeluxe){
+            txt_membership.setText("Non Deluxe");
+        } else{
+            txt_membership.setText("Weekday");
+        }
         
     }
 

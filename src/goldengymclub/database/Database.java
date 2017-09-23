@@ -5,9 +5,9 @@
  */
 package goldengymclub.database;
 
-import goldengymclub.Admin;
-import goldengymclub.Member;
-import goldengymclub.Payment;
+import goldengymclub.util.Admin;
+import goldengymclub.util.Member;
+import goldengymclub.util.Payment;
 import goldengymclub.util.Deluxe;
 import goldengymclub.util.NonDeluxe;
 import goldengymclub.util.Weekday;

@@ -9,6 +9,7 @@ package goldengymclub;
  *
  * @author Neoh
  */
+import goldengymclub.util.Member;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;

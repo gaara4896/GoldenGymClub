@@ -5,6 +5,7 @@
  */
 package goldengymclub;
 
+import goldengymclub.util.Member;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 

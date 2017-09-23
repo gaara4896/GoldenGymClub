@@ -5,6 +5,9 @@
  */
 package goldengymclub;
 
+import goldengymclub.database.Database;
+import goldengymclub.util.Payment;
+import goldengymclub.util.Member;
 import javax.swing.ComboBoxModel;
 import javax.swing.JOptionPane;
 
@@ -45,7 +48,7 @@ public class PayMemberFeePage extends javax.swing.JFrame {
     }
     
     public void recordPayment(Payment payment){
-        //record payment to text;
+        boolean success = Database.getInstance().insertPayment(payment);
     }
 
     /**

@@ -5,6 +5,7 @@
  */
 package goldengymclub;
 
+import goldengymclub.util.Admin;
 import goldengymclub.database.Database;
 import javax.swing.JOptionPane;
 

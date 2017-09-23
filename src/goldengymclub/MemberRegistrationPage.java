@@ -5,6 +5,7 @@
  */
 package goldengymclub;
 
+import goldengymclub.util.Member;
 import goldengymclub.util.Deluxe;
 import goldengymclub.util.Membership;
 import goldengymclub.util.NonDeluxe;
