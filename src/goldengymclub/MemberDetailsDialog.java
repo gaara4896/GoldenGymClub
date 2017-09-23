@@ -25,7 +25,7 @@ public class MemberDetailsDialog extends javax.swing.JFrame {
         txt_fullname.setText(member.getFirstname() + " " + member.getLastname());
         txt_email.setText(member.getEmail());
         txt_phone.setText(member.getPhone());
-        txt_membership.setText(member.getMembership());
+        //txt_membership.setText(member.getMembership());
         
     }
 

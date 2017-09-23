@@ -5,6 +5,10 @@
  */
 package goldengymclub;
 
+import goldengymclub.util.Deluxe;
+import goldengymclub.util.Membership;
+import goldengymclub.util.NonDeluxe;
+import goldengymclub.util.Weekday;
 import javax.swing.JOptionPane;
 
 /**
@@ -240,16 +244,16 @@ public class MemberRegistrationPage extends javax.swing.JFrame {
         String email = txt_email.getText().toString();
         String phone = txt_phone.getText().toString();
         
-        String membership = null;
+        Membership membership = null;
         
         if(rb_deluxe.isSelected()){
-            membership = Member.MEMBERSHIP_DELUXE;
+            membership = Deluxe.getInstance();
         }
         else if(rb_nondeluxe.isSelected()){
-            membership = Member.MEMBERSHIP_NON_DELUXE;
+            membership = NonDeluxe.getInstance();
         }
         else if(rb_weekday.isSelected()){
-            membership = Member.MEMBERSHIP_WEEK_DAY;
+            membership = Weekday.getInstance();
         }
         
         String memberid = generateMemberID();

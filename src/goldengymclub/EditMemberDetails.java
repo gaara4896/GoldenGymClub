@@ -30,17 +30,17 @@ public class EditMemberDetails extends javax.swing.JFrame {
         txt_email.setText(member.getEmail());
         txt_phone.setText(member.getPhone());
         
-        switch(member.getMembership()){
-            case Member.MEMBERSHIP_DELUXE:
-                rb_deluxe.setSelected(true);
-                break;
-            case Member.MEMBERSHIP_NON_DELUXE:
-                rb_nondeluxe.setSelected(true);
-                break;
-            case Member.MEMBERSHIP_WEEK_DAY:
-                rb_weekday.setSelected(true);
-                break;
-        }
+//        switch(member.getMembership()){
+//            case Member.MEMBERSHIP_DELUXE:
+//                rb_deluxe.setSelected(true);
+//                break;
+//            case Member.MEMBERSHIP_NON_DELUXE:
+//                rb_nondeluxe.setSelected(true);
+//                break;
+//            case Member.MEMBERSHIP_WEEK_DAY:
+//                rb_weekday.setSelected(true);
+//                break;
+//        }
         
     }
     
@@ -227,18 +227,15 @@ public class EditMemberDetails extends javax.swing.JFrame {
         String membership = null;
         
         if(rb_deluxe.isSelected()){
-            membership = Member.MEMBERSHIP_DELUXE;
         }
         else if(rb_nondeluxe.isSelected()){
-            membership = Member.MEMBERSHIP_NON_DELUXE;
         }
         else if(rb_weekday.isSelected()){
-            membership = Member.MEMBERSHIP_WEEK_DAY;
         }
         
         member.setEmail(email);
         member.setPhone(phone);
-        member.setMembership(membership);
+        //member.setMembership(membership);
        
         saveChangesToText();
         
