@@ -7,6 +7,7 @@ package goldengymclub.database;
 
 import goldengymclub.Admin;
 import goldengymclub.Member;
+import goldengymclub.Payment;
 import goldengymclub.util.Deluxe;
 import goldengymclub.util.NonDeluxe;
 import goldengymclub.util.Weekday;
@@ -83,8 +84,20 @@ public class Database {
         }
     }
     
-    public boolean addNewMember(Member member){
+    public boolean addNewMember(Payment payment){
         File file = new File("Members.txt");
+        Member member = payment.getMember();
+        
+        try {
+            PrintWriter writer = new PrintWriter(new File(member.getMember_id() + ".txt"));
+            String toWrite = payment.getDate() + " " + payment.getPerson_entry() + " "
+                + payment.getDetails() + " " + payment.getMember().getMember_id() + " "
+                + payment.getAmount();
+            writer.write(toWrite + "\n");
+            writer.flush();
+            writer.close();
+        }catch(Exception e){}     
+        
         int membership;
         if(member.getMembership() instanceof Deluxe){
             membership = 0;
@@ -156,6 +169,38 @@ public class Database {
         return true;
     }
     
+    public boolean insertPayment(Payment payment){
+        String toWrite = payment.getDate() + " " + payment.getPerson_entry() + " "
+                + payment.getDetails() + " " + payment.getMember().getMember_id() + " "
+                + payment.getAmount();
+        try {
+            BufferedWriter bw = new BufferedWriter(
+                    new FileWriter(payment.getMember().getMember_id() + ".txt", true));
+            bw.write(toWrite);
+            bw.newLine();
+            bw.flush();
+            bw.close();
+            return true;
+        } catch (IOException ex) {
+            return false;
+        }
+    }
     
+    public ArrayList<Payment> getPaymentHistory(Member member){
+        
+        ArrayList<Payment> payments = new ArrayList();
+        
+        try {
+            Scanner sc = new Scanner(new File(member.getMember_id() + ".txt"));
+            while(sc.hasNext()){
+                Payment payment = new Payment(sc.next(), sc.next(), sc.next(), 
+                    member, sc.nextDouble());
+                payments.add(payment);
+            }
+            return payments;
+        } catch (FileNotFoundException ex) {
+            return payments;
+        }
+    }
     
 }

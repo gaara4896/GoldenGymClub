@@ -259,7 +259,7 @@ public class PayMemberFeePage extends javax.swing.JFrame {
         
         String date = day + "/" + month + "/" + year;
         
-        Payment payment = new Payment(date, person_entry, details, member.getMember_id(), amount);
+        Payment payment = new Payment(date, person_entry, details, member, amount);
         
         recordPayment(payment);
         

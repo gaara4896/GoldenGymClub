@@ -13,14 +13,14 @@ public class Payment {
     
     private String date;
     private String person_entry;
-    private double amount;
     private String details;
-    private String member_id;
+    private Member member;
+    private double amount;
 
-    public Payment(String date, String person_entry, String details, String member_id, double amount){
+    public Payment(String date, String person_entry, String details, Member member, double amount){
         this.date = date;
         this.person_entry = person_entry;
-        this.member_id = member_id;
+        this.member = member;
         this.details = details;
         this.amount = amount;
     }
@@ -41,14 +41,6 @@ public class Payment {
         this.person_entry = person_entry;
     }
 
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
     public String getDetails() {
         return details;
     }
@@ -57,12 +49,20 @@ public class Payment {
         this.details = details;
     }
 
-    public String getMember_id() {
-        return member_id;
+    public Member getMember() {
+        return member;
     }
 
-    public void setMember_id(String member_id) {
-        this.member_id = member_id;
+    public void setMember(Member member) {
+        this.member = member;
     }
     
+    
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
 }
