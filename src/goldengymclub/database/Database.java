@@ -20,6 +20,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -154,6 +156,66 @@ public class Database {
         } catch (FileNotFoundException ex) {
             return members;
         }
+    }
+    
+    public boolean modifyMember(Member memberModify){
+        ArrayList<Member> members = Database.getInstance().getAllMember();
+        Iterator<Member> i = members.iterator();
+        BufferedWriter bw = null;
+        
+        try {
+            bw = new BufferedWriter(new FileWriter("Members.txt", false));
+        } catch (IOException ex) {
+            return false;
+        }
+        
+        while(i.hasNext()){
+            Member member = i.next();
+            if(member.getMember_id().equals(memberModify.getMember_id())){
+                int membership;
+                if(memberModify.getMembership() instanceof Deluxe){
+                    membership = 0;
+                } else if(memberModify.getMembership() instanceof NonDeluxe){
+                    membership = 1;
+                } else {
+                    membership = 2;
+                }
+                String toWrite = memberModify.getMember_id() + " " + memberModify.getFirstname() + " " 
+                        + memberModify.getLastname() + " " + memberModify.getEmail() + " "
+                        + memberModify.getPhone() + " " + membership;
+                try {
+                    bw.write(toWrite);
+                    bw.newLine();
+                } catch (IOException ex) {
+                    return false;
+                }
+            } else {
+                int membership;
+                if(member.getMembership() instanceof Deluxe){
+                    membership = 0;
+                } else if(member.getMembership() instanceof NonDeluxe){
+                    membership = 1;
+                } else {
+                    membership = 2;
+                }
+                String toWrite = member.getMember_id() + " " + member.getFirstname() + " " 
+                        + member.getLastname() + " " + member.getEmail() + " "
+                        + member.getPhone() + " " + membership;
+                try {
+                    bw.write(toWrite);
+                    bw.newLine();
+                } catch (IOException ex) {
+                    return false;
+                }
+            }
+        }
+        try {
+            bw.flush();
+            bw.close();
+        } catch (IOException ex) {
+            return false;
+        }
+        return true;
     }
     
     public boolean checkIdAvailable(String id){
