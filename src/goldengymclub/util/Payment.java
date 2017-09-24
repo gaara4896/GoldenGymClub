@@ -30,7 +30,7 @@ public class Payment {
     @Override
     public String toString(){
         
-        return date + "     RM" + String.valueOf(amount) + "     " + details;
+        return date + "     RM" + String.valueOf(amount) + "     " + person_entry + "     "+ details;
     }
     
     public String getDate() {

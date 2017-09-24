@@ -242,7 +242,7 @@ public class Database {
     }
     
     public boolean insertPayment(Payment payment){
-        String toWrite = payment.getDate() + " " + payment.getPerson_entry() + " "
+        String toWrite = payment.getDate() + " " + toTextFormat(payment.getPerson_entry()) + " "
                 + toTextFormat(payment.getDetails()) + " "
                 + payment.getAmount();
         try {
@@ -265,7 +265,7 @@ public class Database {
         try {
             Scanner sc = new Scanner(new File(member.getMember_id() + ".txt"));
             while(sc.hasNext()){
-                Payment payment = new Payment(sc.next(), sc.next(), toStringFormat(sc.next()), 
+                Payment payment = new Payment(sc.next(), toStringFormat(sc.next()), toStringFormat(sc.next()), 
                     member, sc.nextDouble());
                 payments.add(payment);
             }
