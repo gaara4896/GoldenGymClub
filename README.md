@@ -2,9 +2,9 @@
 
 ## Tools
 
-[![Oracle Jdk8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+[Oracle Jdk8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
-[![Netbean](https://netbeans.org/downloads/)
+[Netbean](https://netbeans.org/downloads/)
 
 ## To Run
 
