@@ -14,11 +14,11 @@ import goldengymclub.util.Admin;
 import goldengymclub.util.Member;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
-import javax.swing.JLabel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import sun.rmi.runtime.Log;
 public class SelectActionPage extends javax.swing.JFrame {
 
     /**
@@ -44,10 +44,10 @@ public class SelectActionPage extends javax.swing.JFrame {
               //filterMember(txt_search.getText().toString());
             }
             public void removeUpdate(DocumentEvent e) {
-              filterMember(txt_search.getText().toString());
+              filterMember(txt_search.getText().toString().toLowerCase());
             }
             public void insertUpdate(DocumentEvent e) {
-              filterMember(txt_search.getText().toString());
+              filterMember(txt_search.getText().toString().toLowerCase());
             }
 
            
@@ -60,13 +60,18 @@ public class SelectActionPage extends javax.swing.JFrame {
             @Override
             public void valueChanged(ListSelectionEvent ev) {
               
-                if(!ev.getValueIsAdjusting()){
-                  int position = list_member.getSelectedIndex();
-                  Member member = filteredMemberList.get(position);
-                  //JOptionPane.showMessageDialog(null, "Hello");
-                  
-                  new MemberDetailsDialog(member).show();
-                }
+                    if(!ev.getValueIsAdjusting()){
+                        
+                      int position = list_member.getSelectedIndex();
+                      
+                      if(position >= 0){
+                        Member member = filteredMemberList.get(position);
+                        //JOptionPane.showMessageDialog(null, "Hello");
+
+                        new MemberDetailsDialog(member).show();
+                      }
+                    }
+                    
                 
             }
         });
@@ -74,7 +79,7 @@ public class SelectActionPage extends javax.swing.JFrame {
     }
     
     public void filterMember(String keyword) {
-         
+       
         list_member.removeAll();
         listModel.removeAllElements();
         filteredMemberList.clear();
@@ -88,9 +93,9 @@ public class SelectActionPage extends javax.swing.JFrame {
             
             Member member = memberList.get(i);
             
-            if(member.getFirstname().contains(keyword) || member.getLastname().contains(keyword)){
+            if(member.getFirstname().toLowerCase().contains(keyword) || member.getLastname().toLowerCase().contains(keyword)){
                 //list_member.add(processMemberDetailsToString(member), new JLabel());
-                
+               
                 filteredMemberList.add(member);
                 listModel.addElement(member.toString());
                 
@@ -107,7 +112,7 @@ public class SelectActionPage extends javax.swing.JFrame {
         listModel.removeAllElements();
         
         memberList = Database.getInstance().getAllMember();
-        filteredMemberList = memberList;
+        filteredMemberList = (ArrayList)memberList.clone();
         
         for(int i = 0; i<memberList.size(); i++){
             
