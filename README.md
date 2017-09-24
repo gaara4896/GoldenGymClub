@@ -2,10 +2,20 @@
 
 ## Tools
 
-[Oracle Jdk8]()
+[![Oracle Jdk8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
-[Netbean]()
+[![Netbean](https://netbeans.org/downloads/)
 
-## To Contribute
+## To Run
 
-`git clone `
+##### Step 1
+
+`git clone https://github.com/gaara4896/GoldenGymClub.git`
+
+or
+
+Download the project
+
+##### Step 2
+
+Open netbean and open project
