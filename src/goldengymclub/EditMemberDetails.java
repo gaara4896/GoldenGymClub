@@ -248,9 +248,9 @@ public class EditMemberDetails extends javax.swing.JFrame {
         
         member.setEmail(email);
         member.setPhone(phone);
-        //member.setMembership(membership);
+        member.setMembership(membership);
        
-        saveChangesToText(member);
+        saveChangesToText();
         
         JOptionPane.showMessageDialog(null, "Changes saved!");
         this.dispose();

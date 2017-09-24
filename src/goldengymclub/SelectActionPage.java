@@ -11,6 +11,7 @@ package goldengymclub;
  */
 
 import goldengymclub.database.Database;
+import goldengymclub.util.Admin;
 import goldengymclub.util.Member;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
@@ -18,7 +19,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import sun.rmi.runtime.Log;
 public class SelectActionPage extends javax.swing.JFrame {
 
     /**

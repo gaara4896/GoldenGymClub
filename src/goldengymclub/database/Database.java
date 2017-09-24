@@ -115,8 +115,8 @@ public class Database {
         } else {
             membership = 2;
         }
-        String toWrite = member.getMember_id() + " " + member.getFirstname() + " " 
-                        + member.getLastname() + " " + member.getEmail() + " "
+        String toWrite = member.getMember_id() + " " + toTextFormat(member.getFirstname()) + " " 
+                        + toTextFormat(member.getLastname()) + " " + member.getEmail() + " "
                         + member.getPhone() + " " + membership;
         if(file.exists()){
             try {
