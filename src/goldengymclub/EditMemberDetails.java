@@ -5,6 +5,12 @@
  */
 package goldengymclub;
 
+import goldengymclub.database.Database;
+import goldengymclub.util.Deluxe;
+import goldengymclub.util.Member;
+import goldengymclub.util.Membership;
+import goldengymclub.util.NonDeluxe;
+import goldengymclub.util.Weekday;
 import javax.swing.JOptionPane;
 
 /**
@@ -30,22 +36,29 @@ public class EditMemberDetails extends javax.swing.JFrame {
         txt_email.setText(member.getEmail());
         txt_phone.setText(member.getPhone());
         
-        switch(member.getMembership()){
-            case Member.MEMBERSHIP_DELUXE:
+        if(member.getMembership() == Deluxe.getInstance()){
+       
                 rb_deluxe.setSelected(true);
-                break;
-            case Member.MEMBERSHIP_NON_DELUXE:
+                
+        }
+        else if(member.getMembership() == NonDeluxe.getInstance()){
+            
                 rb_nondeluxe.setSelected(true);
-                break;
-            case Member.MEMBERSHIP_WEEK_DAY:
+                
+        }
+        else{
+         
                 rb_weekday.setSelected(true);
-                break;
+            
         }
         
     }
     
     public void saveChangesToText(){
         //write to text file here
+        
+        Database.getInstance().modifyMember(member);
+        
     }
 
     /**
@@ -73,7 +86,7 @@ public class EditMemberDetails extends javax.swing.JFrame {
         txt_email = new javax.swing.JTextField();
         txt_phone = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Member ID :");
 
@@ -224,16 +237,21 @@ public class EditMemberDetails extends javax.swing.JFrame {
         String email = txt_email.getText().toString();
         String phone = txt_phone.getText().toString();
         
-        String membership = null;
+        if(email.isEmpty() || phone.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Please do not leave any field blank!");
+            return;
+        }
+        
+        Membership membership = null;
         
         if(rb_deluxe.isSelected()){
-            membership = Member.MEMBERSHIP_DELUXE;
+            membership = Deluxe.getInstance();
         }
         else if(rb_nondeluxe.isSelected()){
-            membership = Member.MEMBERSHIP_NON_DELUXE;
+            membership = NonDeluxe.getInstance();
         }
         else if(rb_weekday.isSelected()){
-            membership = Member.MEMBERSHIP_WEEK_DAY;
+            membership = Weekday.getInstance();
         }
         
         member.setEmail(email);

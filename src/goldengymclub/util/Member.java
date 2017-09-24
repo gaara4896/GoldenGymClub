@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package goldengymclub;
+package goldengymclub.util;
+
+import goldengymclub.util.Membership;
 
 /**
  *
@@ -11,18 +13,14 @@ package goldengymclub;
  */
 public class Member {
     
-    public static final String MEMBERSHIP_DELUXE = "Deluxe";
-    public static final String MEMBERSHIP_NON_DELUXE = "Non-Deluxe";
-    public static final String MEMBERSHIP_WEEK_DAY = "Week-Day";
-    
     private String member_id;
     private String firstname;
     private String lastname;
     private String phone;
     private String email;
-    private String membership;
+    private Membership membership;
     
-    public Member(String memberid, String firstname, String lastname, String email, String phone, String membership){
+    public Member(String memberid, String firstname, String lastname, String email, String phone, Membership membership){
         this.member_id = memberid;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -31,29 +29,25 @@ public class Member {
         this.membership = membership;
     }
     
+    public Member(String memberid, String firstname, String lastname, String email, String phone){
+        this(memberid, firstname, lastname, email, phone, null);
+    }
+    
+    @Override
+    public String toString(){
+        return member_id + "     " + firstname + " " + lastname;
+    }
     
     public String getMember_id() {
         return member_id;
-    }
-
-    public void setMember_id(String member_id) {
-        this.member_id = member_id;
     }
 
     public String getFirstname() {
         return firstname;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
     public String getLastname() {
         return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
     }
 
     public String getPhone() {
@@ -72,11 +66,11 @@ public class Member {
         this.email = email;
     }
 
-    public String getMembership() {
+    public Membership getMembership() {
         return membership;
     }
 
-    public void setMembership(String membership) {
+    public void setMembership(Membership membership) {
         this.membership = membership;
     }
    

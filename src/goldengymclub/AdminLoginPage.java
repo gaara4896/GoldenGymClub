@@ -5,6 +5,8 @@
  */
 package goldengymclub;
 
+import goldengymclub.database.Database;
+import goldengymclub.util.Admin;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,14 +20,7 @@ public class AdminLoginPage extends javax.swing.JFrame {
      */
     public AdminLoginPage() {
         initComponents();
-    }
-    
-    public boolean adminLogin(String username, String password){
         
-        //check for admin username and password
-        //return true if valid false if not valid
-        
-        return false;
     }
 
     /**
@@ -43,7 +38,7 @@ public class AdminLoginPage extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         btn_login = new javax.swing.JButton();
         txt_username = new javax.swing.JTextField();
-        txt_password = new javax.swing.JTextField();
+        txt_password = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,13 +73,12 @@ public class AdminLoginPage extends javax.swing.JFrame {
                 .addGap(200, 200, 200))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 150, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(btn_login)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel3)
-                        .addComponent(txt_username, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4)
-                        .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_username, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_password, javax.swing.GroupLayout.Alignment.LEADING))
                 .addGap(149, 149, 149))
         );
         layout.setVerticalGroup(
@@ -117,10 +111,12 @@ public class AdminLoginPage extends javax.swing.JFrame {
         String username = txt_username.getText().toString();
         String password = txt_password.getText().toString();
         
-        boolean login_success = adminLogin(username, password);
+        Admin admin = new Admin(username, password);
+        
+        boolean login_success = Database.getInstance().searchAdmin(admin);
         
         if(login_success){
-            new SelectActionPage().show();
+            new SelectActionPage(admin).show();
             this.dispose();
         }
         else{
@@ -170,7 +166,7 @@ public class AdminLoginPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField txt_password;
+    private javax.swing.JPasswordField txt_password;
     private javax.swing.JTextField txt_username;
     // End of variables declaration//GEN-END:variables
 }
