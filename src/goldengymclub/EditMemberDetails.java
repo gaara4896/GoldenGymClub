@@ -11,6 +11,7 @@ import goldengymclub.util.Member;
 import goldengymclub.util.Membership;
 import goldengymclub.util.NonDeluxe;
 import goldengymclub.util.Weekday;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -36,20 +37,12 @@ public class EditMemberDetails extends javax.swing.JFrame {
         txt_email.setText(member.getEmail());
         txt_phone.setText(member.getPhone());
         
-        if(member.getMembership() == Deluxe.getInstance()){
-       
-                rb_deluxe.setSelected(true);
-                
-        }
-        else if(member.getMembership() == NonDeluxe.getInstance()){
-            
-                rb_nondeluxe.setSelected(true);
-                
-        }
-        else{
-         
-                rb_weekday.setSelected(true);
-            
+        if(member.getMembership() instanceof Deluxe){
+            rb_deluxe.setSelected(true);
+        } else if(member.getMembership() instanceof NonDeluxe){
+            rb_nondeluxe.setSelected(true);
+        } else {
+            rb_weekday.setSelected(true);
         }
         
     }
@@ -58,7 +51,6 @@ public class EditMemberDetails extends javax.swing.JFrame {
         //write to text file here
         
         Database.getInstance().modifyMember(member);
-        
     }
 
     /**
@@ -256,9 +248,9 @@ public class EditMemberDetails extends javax.swing.JFrame {
         
         member.setEmail(email);
         member.setPhone(phone);
-        member.setMembership(membership);
+        //member.setMembership(membership);
        
-        saveChangesToText();
+        saveChangesToText(member);
         
         JOptionPane.showMessageDialog(null, "Changes saved!");
         this.dispose();

@@ -29,4 +29,5 @@ public class NonDeluxe extends Membership{
     public String toString(){
         return "Non-Deluxe";
     }
+
 }

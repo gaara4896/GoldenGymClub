@@ -70,7 +70,6 @@ public class PayMemberFeePage extends javax.swing.JFrame {
         else{
             Database.getInstance().insertPayment(payment);
         }
-        
     }
 
     /**
@@ -288,7 +287,6 @@ public class PayMemberFeePage extends javax.swing.JFrame {
         if(details.isEmpty()){
             details = "None";
         }
-        
         Payment payment = new Payment(date, person_entry, details, member, amount);
         
         recordPayment(payment);

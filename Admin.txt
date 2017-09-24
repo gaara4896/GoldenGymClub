@@ -1,2 +1,1 @@
 admin admin
-tony 1234

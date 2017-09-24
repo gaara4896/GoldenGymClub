@@ -29,4 +29,5 @@ public class Weekday extends Membership{
     public String toString(){
         return "Week-Day";
     }
+
 }

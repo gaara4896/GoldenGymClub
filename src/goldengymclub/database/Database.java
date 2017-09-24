@@ -190,6 +190,7 @@ public class Database {
                 } else {
                     membership = 2;
                 }
+
                 String toWrite = memberModify.getMember_id() + " " + toTextFormat(memberModify.getFirstname()) + " " 
                         + toTextFormat(memberModify.getLastname()) + " " + memberModify.getEmail() + " "
                         + memberModify.getPhone() + " " + membership;
@@ -208,6 +209,7 @@ public class Database {
                 } else {
                     membership = 2;
                 }
+
                 String toWrite = member.getMember_id() + " " + toTextFormat(member.getFirstname()) + " " 
                         + toTextFormat(member.getLastname()) + " " + member.getEmail() + " "
                         + member.getPhone() + " " + membership;
@@ -242,9 +244,9 @@ public class Database {
     }
     
     public boolean insertPayment(Payment payment){
+
         String toWrite = payment.getDate() + " " + toTextFormat(payment.getPerson_entry()) + " "
-                + toTextFormat(payment.getDetails()) + " "
-                + payment.getAmount();
+                + toTextFormat(payment.getDetails()) + " " + payment.getAmount();
         try {
             BufferedWriter bw = new BufferedWriter(
                     new FileWriter(payment.getMember().getMember_id() + ".txt", true));
@@ -288,5 +290,5 @@ public class Database {
         
         return processed;
     }
-    
+
 }

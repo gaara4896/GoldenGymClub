@@ -5,6 +5,7 @@
  */
 package goldengymclub;
 
+
 import goldengymclub.database.Database;
 import goldengymclub.util.Admin;
 import javax.swing.JOptionPane;
@@ -20,8 +21,9 @@ public class AdminLoginPage extends javax.swing.JFrame {
      */
     public AdminLoginPage() {
         initComponents();
-        
+
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -111,6 +113,7 @@ public class AdminLoginPage extends javax.swing.JFrame {
         String username = txt_username.getText().toString();
         String password = txt_password.getText().toString();
         
+
         Admin admin = new Admin(username, password);
         
         boolean login_success = Database.getInstance().searchAdmin(admin);

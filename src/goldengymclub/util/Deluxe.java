@@ -25,6 +25,7 @@ public class Deluxe extends Membership{
         }
     }
     
+
     @Override
     public String toString(){
         return "Deluxe";
