@@ -33,6 +33,12 @@ public class Member {
         this(memberid, firstname, lastname, email, phone, null);
     }
     
+
+    @Override
+    public String toString(){
+        return member_id + "     " + firstname + " " + lastname;
+    }
+
     public String getMember_id() {
         return member_id;
     }

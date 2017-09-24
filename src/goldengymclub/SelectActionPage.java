@@ -9,14 +9,16 @@ package goldengymclub;
  *
  * @author Neoh
  */
+
+import goldengymclub.database.Database;
 import goldengymclub.util.Member;
 import java.util.ArrayList;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import javax.swing.DefaultListModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import sun.rmi.runtime.Log;
 public class SelectActionPage extends javax.swing.JFrame {
 
     /**
@@ -25,62 +27,104 @@ public class SelectActionPage extends javax.swing.JFrame {
      * 
      */
     
-    private ArrayList<Member> memberList = new ArrayList();
+    public static ArrayList<Member> memberList = new ArrayList();
+    public ArrayList<Member> filteredMemberList = new ArrayList();
+    private DefaultListModel<String> listModel = new DefaultListModel();
+    private static Admin admin = null;
     
-    public SelectActionPage() {
+    public SelectActionPage(Admin admin) {
         initComponents();
+        
+        this.admin = admin;
+        
+        txt_admin_username.setText(admin.getUsername());
         
         txt_search.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {
-              filterMember(txt_search.getText().toString());
+              //filterMember(txt_search.getText().toString());
             }
             public void removeUpdate(DocumentEvent e) {
-              filterMember(txt_search.getText().toString());
+              filterMember(txt_search.getText().toString().toLowerCase());
             }
             public void insertUpdate(DocumentEvent e) {
-              filterMember(txt_search.getText().toString());
+              filterMember(txt_search.getText().toString().toLowerCase());
             }
 
-            public void filterMember(String keyword) {
-               //filter the member list in the listview
-            }
+           
           });
         
          loadMemberList();
+         
+         list_member.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent ev) {
+              
+                    if(!ev.getValueIsAdjusting()){
+                        
+                      int position = list_member.getSelectedIndex();
+                      
+                      if(position >= 0){
+                        Member member = filteredMemberList.get(position);
+                        //JOptionPane.showMessageDialog(null, "Hello");
+
+                        new MemberDetailsDialog(member).show();
+                      }
+                    }
+                    
+                
+            }
+        });
      
+    }
+    
+    public void filterMember(String keyword) {
+       
+        list_member.removeAll();
+        listModel.removeAllElements();
+        filteredMemberList.clear();
+        
+        if(keyword.isEmpty()){
+            loadMemberList();
+            return;
+        }
+        
+        for(int i = 0; i<memberList.size(); i++){
+            
+            Member member = memberList.get(i);
+            
+            if(member.getFirstname().toLowerCase().contains(keyword) || member.getLastname().toLowerCase().contains(keyword)){
+                //list_member.add(processMemberDetailsToString(member), new JLabel());
+               
+                filteredMemberList.add(member);
+                listModel.addElement(member.toString());
+                
+            }
+        }
+        
+        list_member.setModel(listModel);
+               
     }
     
     public void loadMemberList(){
         
         list_member.removeAll();
+        listModel.removeAllElements();
+        
+        memberList = Database.getInstance().getAllMember();
+        filteredMemberList = (ArrayList)memberList.clone();
         
         for(int i = 0; i<memberList.size(); i++){
             
-            list_member.add(processMemberDetailsToString(memberList.get(i)), new JLabel());
+            Member member = memberList.get(i);
+            
+            listModel.addElement(member.toString());
+            //list_member.add(processMemberDetailsToString(member), new JLabel());
             
         }
         
-        list_member.addListSelectionListener(new ListSelectionListener() {
-
-            @Override
-            public void valueChanged(ListSelectionEvent item) {
-              
-                  int position = list_member.getSelectedIndex();
-                  Member member = memberList.get(position);
-                  //JOptionPane.showMessageDialog(null, "Hello");
-                  
-                  new MemberDetailsDialog(member).show();
-                
-            }
-        });
+        list_member.setModel(listModel);
         
-    }
-    
-    public String processMemberDetailsToString(Member member){
-        
-        String detail = member.getMember_id() + " " + member.getFirstname() + member.getLastname();
-        
-        return detail;
     }
 
     /**
@@ -101,6 +145,7 @@ public class SelectActionPage extends javax.swing.JFrame {
         txt_search = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         list_member = new javax.swing.JList<>();
+        btn_add_admin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -127,11 +172,18 @@ public class SelectActionPage extends javax.swing.JFrame {
         jLabel3.setText("Search : ");
 
         list_member.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = {"Jason","Tony","Koay"};
+            String[] strings = {};
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
         jScrollPane1.setViewportView(list_member);
+
+        btn_add_admin.setText("Add Admin");
+        btn_add_admin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_add_adminActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -140,12 +192,14 @@ public class SelectActionPage extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel2)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel1)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txt_admin_username))
+                            .addComponent(txt_admin_username)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_add_admin))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addComponent(btn_register_member)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -161,10 +215,12 @@ public class SelectActionPage extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txt_admin_username))
-                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(txt_admin_username))
+                    .addComponent(btn_add_admin))
+                .addGap(16, 16, 16)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -186,7 +242,7 @@ public class SelectActionPage extends javax.swing.JFrame {
     private void btn_register_memberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_register_memberActionPerformed
         // TODO add your handling code here:
         
-        new MemberRegistrationPage().show();
+        new MemberRegistrationPage(this).show();
         
     }//GEN-LAST:event_btn_register_memberActionPerformed
 
@@ -197,6 +253,13 @@ public class SelectActionPage extends javax.swing.JFrame {
         this.dispose();
         
     }//GEN-LAST:event_btn_logoutActionPerformed
+
+    private void btn_add_adminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add_adminActionPerformed
+        // TODO add your handling code here:
+        
+        new NewAdminPage().show();
+        
+    }//GEN-LAST:event_btn_add_adminActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,12 +291,13 @@ public class SelectActionPage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SelectActionPage().setVisible(true);
+                new SelectActionPage(admin).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_add_admin;
     private javax.swing.JButton btn_logout;
     private javax.swing.JButton btn_register_member;
     private javax.swing.JLabel jLabel1;

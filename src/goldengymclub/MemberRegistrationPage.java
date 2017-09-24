@@ -5,12 +5,14 @@
  */
 package goldengymclub;
 
-import goldengymclub.util.Member;
+import goldengymclub.database.Database;
 import goldengymclub.util.Deluxe;
-import goldengymclub.util.Membership;
+import goldengymclub.util.Payment;
+import javax.swing.JOptionPane;
+import goldengymclub.util.Member;
 import goldengymclub.util.NonDeluxe;
 import goldengymclub.util.Weekday;
-import javax.swing.JOptionPane;
+import goldengymclub.util.Membership;
 
 /**
  *
@@ -21,8 +23,15 @@ public class MemberRegistrationPage extends javax.swing.JFrame {
     /**
      * Creates new form MemberRegistrationPage
      */
-    public MemberRegistrationPage() {
+    
+    public static Payment payment = null;
+    public static SelectActionPage mainpage = null;
+    
+    public MemberRegistrationPage(SelectActionPage mainpage) {
         initComponents();
+        
+        payment = null;
+        this.mainpage = mainpage;
         
         rdgroup_membership.add(rb_deluxe);
         rdgroup_membership.add(rb_nondeluxe);
@@ -31,13 +40,22 @@ public class MemberRegistrationPage extends javax.swing.JFrame {
     
     public String generateMemberID(){
         //return memberid;
-        String memberid = "memberid";
+        String memberid = Database.getInstance().generateMemberId(SelectActionPage.memberList.size());
         
         return memberid;
     }
     
+    public void makePayment(Member member){
+        
+        new PayMemberFeePage(member, true, this).show();
+       
+    }
+    
     public void saveMemberToText(Member member){
         //record member to text
+        
+        Database.getInstance().addNewMember(payment);
+     
     }
 
     /**
@@ -51,6 +69,7 @@ public class MemberRegistrationPage extends javax.swing.JFrame {
 
         rdgroup_membership = new javax.swing.ButtonGroup();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -70,7 +89,9 @@ public class MemberRegistrationPage extends javax.swing.JFrame {
 
         jButton1.setText("jButton1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jButton2.setText("jButton2");
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -245,9 +266,13 @@ public class MemberRegistrationPage extends javax.swing.JFrame {
         String email = txt_email.getText().toString();
         String phone = txt_phone.getText().toString();
         
+        if(firstname.isEmpty() || lastname.isEmpty() || email.isEmpty() || phone.isEmpty()){
+            return;
+        }
+        
         Membership membership = null;
         
-        if(rb_deluxe.isSelected()){
+         if(rb_deluxe.isSelected()){
             membership = Deluxe.getInstance();
         }
         else if(rb_nondeluxe.isSelected()){
@@ -261,11 +286,7 @@ public class MemberRegistrationPage extends javax.swing.JFrame {
         
         Member member = new Member(memberid, firstname, lastname, email, phone, membership);
         
-        saveMemberToText(member);
-        
-        JOptionPane.showMessageDialog(null, "Registration complete!\nYour member ID is " + memberid + ".");
-        
-        this.dispose();
+        makePayment(member);
         
     }//GEN-LAST:event_btn_registerActionPerformed
 
@@ -299,7 +320,7 @@ public class MemberRegistrationPage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MemberRegistrationPage().setVisible(true);
+                new MemberRegistrationPage(mainpage).setVisible(true);
             }
         });
     }
@@ -309,6 +330,7 @@ public class MemberRegistrationPage extends javax.swing.JFrame {
     private javax.swing.JButton btn_details;
     private javax.swing.JButton btn_register;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

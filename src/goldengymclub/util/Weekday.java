@@ -23,5 +23,11 @@ public class Weekday extends Membership{
         }else{
             return instance;
         }
-    }    
+    }  
+    
+    @Override
+    public String toString(){
+        return "Week-Day";
+    }
+
 }

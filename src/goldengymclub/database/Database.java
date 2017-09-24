@@ -43,6 +43,13 @@ public class Database {
         }
     }
     
+    public String generateMemberId(int membersSize){
+        
+        int memberIdInt = 1000000 + membersSize + 1;
+        
+        return String.valueOf(memberIdInt);
+    }
+    
     public boolean addAdmin(Admin admin){
         File file = new File("Admin.txt");
         if(file.exists()){
@@ -142,10 +149,13 @@ public class Database {
         try {
             Scanner sc = new Scanner(new File("Members.txt"));
             while(sc.hasNext()){
-                Member member = new Member(sc.next(), sc.next(), sc.next(), sc.next(), sc.next());
-                if(sc.nextInt() == 0){
+                Member member = new Member(sc.next(), toStringFormat(sc.next()), toStringFormat(sc.next()), sc.next(), sc.next());
+                
+                int membership = sc.nextInt();
+                
+                if(membership == 0){
                     member.setMembership(Deluxe.getInstance());
-                } else if(sc.nextInt() == 1){
+                } else if(membership == 1){
                     member.setMembership(NonDeluxe.getInstance());
                 } else {
                     member.setMembership(Weekday.getInstance());
@@ -180,8 +190,9 @@ public class Database {
                 } else {
                     membership = 2;
                 }
-                String toWrite = memberModify.getMember_id() + " " + memberModify.getFirstname() + " " 
-                        + memberModify.getLastname() + " " + memberModify.getEmail() + " "
+
+                String toWrite = memberModify.getMember_id() + " " + toTextFormat(memberModify.getFirstname()) + " " 
+                        + toTextFormat(memberModify.getLastname()) + " " + memberModify.getEmail() + " "
                         + memberModify.getPhone() + " " + membership;
                 try {
                     bw.write(toWrite);
@@ -198,8 +209,9 @@ public class Database {
                 } else {
                     membership = 2;
                 }
-                String toWrite = member.getMember_id() + " " + member.getFirstname() + " " 
-                        + member.getLastname() + " " + member.getEmail() + " "
+
+                String toWrite = member.getMember_id() + " " + toTextFormat(member.getFirstname()) + " " 
+                        + toTextFormat(member.getLastname()) + " " + member.getEmail() + " "
                         + member.getPhone() + " " + membership;
                 try {
                     bw.write(toWrite);
@@ -232,9 +244,9 @@ public class Database {
     }
     
     public boolean insertPayment(Payment payment){
-        String toWrite = payment.getDate() + " " + payment.getPerson_entry() + " "
-                + payment.getDetails() + " " + payment.getMember().getMember_id() + " "
-                + payment.getAmount();
+
+        String toWrite = payment.getDate() + " " + toTextFormat(payment.getPerson_entry()) + " "
+                + toTextFormat(payment.getDetails()) + " " + payment.getAmount();
         try {
             BufferedWriter bw = new BufferedWriter(
                     new FileWriter(payment.getMember().getMember_id() + ".txt", true));
@@ -255,7 +267,7 @@ public class Database {
         try {
             Scanner sc = new Scanner(new File(member.getMember_id() + ".txt"));
             while(sc.hasNext()){
-                Payment payment = new Payment(sc.next(), sc.next(), sc.next(), 
+                Payment payment = new Payment(sc.next(), toStringFormat(sc.next()), toStringFormat(sc.next()), 
                     member, sc.nextDouble());
                 payments.add(payment);
             }
@@ -265,4 +277,18 @@ public class Database {
         }
     }
     
+    public String toTextFormat(String details){
+        
+        String processed = details.replaceAll(" ", "_");
+        
+        return processed;
+    }
+    
+    public String toStringFormat(String details){
+        
+        String processed = details.replaceAll("_", " ");
+        
+        return processed;
+    }
+
 }

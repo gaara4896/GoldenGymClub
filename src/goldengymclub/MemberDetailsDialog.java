@@ -13,6 +13,7 @@ import goldengymclub.util.NonDeluxe;
  *
  * @author Neoh
  */
+import goldengymclub.util.Member;
 public class MemberDetailsDialog extends javax.swing.JFrame {
 
     /**
@@ -29,14 +30,8 @@ public class MemberDetailsDialog extends javax.swing.JFrame {
         txt_fullname.setText(member.getFirstname() + " " + member.getLastname());
         txt_email.setText(member.getEmail());
         txt_phone.setText(member.getPhone());
-        if(member.getMembership() instanceof Deluxe){
-            txt_membership.setText("Deluxe");
-        } else if(member.getMembership() instanceof NonDeluxe){
-            txt_membership.setText("Non Deluxe");
-        } else{
-            txt_membership.setText("Weekday");
-        }
-        
+
+        txt_membership.setText(member.getMembership().toString());
     }
 
     /**
@@ -64,7 +59,7 @@ public class MemberDetailsDialog extends javax.swing.JFrame {
         btn_edit = new javax.swing.JButton();
         btn_check_record = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         txt_memberid.setText("Member ID");
 
@@ -194,6 +189,7 @@ public class MemberDetailsDialog extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_closeActionPerformed
@@ -205,6 +201,9 @@ public class MemberDetailsDialog extends javax.swing.JFrame {
 
     private void btn_make_paymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_make_paymentActionPerformed
         // TODO add your handling code here:
+        
+        new PayMemberFeePage(member, false, null).show();
+        
     }//GEN-LAST:event_btn_make_paymentActionPerformed
 
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed

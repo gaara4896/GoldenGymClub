@@ -5,9 +5,12 @@
  */
 package goldengymclub;
 
-import goldengymclub.util.Member;
+import goldengymclub.database.Database;
 import java.util.ArrayList;
 import javax.swing.JLabel;
+import goldengymclub.util.Payment;
+import goldengymclub.util.Member;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -20,7 +23,8 @@ public class PaymentRecordPage extends javax.swing.JFrame {
      */
     
     private static Member member = null;
-    private ArrayList<String> paymentRecords = new ArrayList();
+    private ArrayList<Payment> paymentRecords = new ArrayList();
+    private DefaultListModel<String> listModel = new DefaultListModel();
     
     public PaymentRecordPage(Member member) {
         initComponents();
@@ -35,13 +39,20 @@ public class PaymentRecordPage extends javax.swing.JFrame {
         
     }
     
-    public void insertPaymentRecordsToList(ArrayList<String> paymentRecords){
+    public void insertPaymentRecordsToList(ArrayList<Payment> paymentRecords){
+        
+        paymentRecords = Database.getInstance().getPaymentHistory(member);
         
         for(int i = 0; i<paymentRecords.size(); i++){
             
-            list_payment.add(paymentRecords.get(i), new JLabel());
+            Payment payment = paymentRecords.get(i);
+            
+            listModel.addElement(payment.toString());
+            //list_payment.add(paymentRecords.get(i).toString(), new JLabel());
             
         }
+        
+        list_payment.setModel(listModel);
         
     }
 
@@ -60,7 +71,7 @@ public class PaymentRecordPage extends javax.swing.JFrame {
         list_payment = new javax.swing.JList<>();
         btn_back = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         txt_username.setText("Username");
 
@@ -111,6 +122,7 @@ public class PaymentRecordPage extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed

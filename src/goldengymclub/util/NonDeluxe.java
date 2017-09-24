@@ -24,4 +24,10 @@ public class NonDeluxe extends Membership{
             return instance;
         }
     }
+    
+    @Override
+    public String toString(){
+        return "Non-Deluxe";
+    }
+
 }

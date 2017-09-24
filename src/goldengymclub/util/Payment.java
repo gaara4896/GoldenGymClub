@@ -27,6 +27,13 @@ public class Payment {
         this.amount = amount;
     }
     
+
+    @Override
+    public String toString(){
+        
+        return date + "     RM" + String.valueOf(amount) + "     " + person_entry + "     "+ details;
+    }
+
     public String getDate() {
         return date;
     }

@@ -6,10 +6,10 @@
 package goldengymclub;
 
 import goldengymclub.database.Database;
-import goldengymclub.util.Payment;
-import goldengymclub.util.Member;
 import javax.swing.ComboBoxModel;
 import javax.swing.JOptionPane;
+import goldengymclub.util.Member;
+import goldengymclub.util.Payment;
 
 /**
  *
@@ -23,14 +23,18 @@ public class PayMemberFeePage extends javax.swing.JFrame {
      */
     
     private static Member member = null;
+    private static boolean newMember = false;
+    private static MemberRegistrationPage registrationPage;
     
     private String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
    
     
-    public PayMemberFeePage(Member member) {
+    public PayMemberFeePage(Member member, boolean newMember, MemberRegistrationPage registrationPage) {
         initComponents();
         
         this.member = member;
+        this.newMember = newMember;
+        this.registrationPage = registrationPage;
         
         addMonthsToComboBox();
         
@@ -48,7 +52,24 @@ public class PayMemberFeePage extends javax.swing.JFrame {
     }
     
     public void recordPayment(Payment payment){
-        boolean success = Database.getInstance().insertPayment(payment);
+        //record payment to text;
+        
+        if(newMember){
+            
+            Database.getInstance().addNewMember(payment);
+        
+            JOptionPane.showMessageDialog(null, "Registration complete!\nYour member ID is " + payment.getMember().getMember_id() + ".");
+            
+            //mainpage.loadMemberList();
+
+            registrationPage.mainpage.loadMemberList();
+            registrationPage.dispose();
+            this.dispose();
+            
+        }
+        else{
+            Database.getInstance().insertPayment(payment);
+        }
     }
 
     /**
@@ -91,7 +112,7 @@ public class PayMemberFeePage extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jList1);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -253,20 +274,26 @@ public class PayMemberFeePage extends javax.swing.JFrame {
     private void btn_recordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_recordActionPerformed
         // TODO add your handling code here:
         
-        String day = txt_day.getText().toString();
+        int day = Integer.parseInt(txt_day.getText().toString());
         String month = combobox_month.getSelectedItem().toString();
         String year = txt_year.getText().toString();
         String details = txt_payment_details.getText().toString();
         String person_entry = txt_person_entry.getText().toString();
         double amount = Double.parseDouble(txt_amount.getText().toString());
         
-        String date = day + "/" + month + "/" + year;
+        String formatDay = String.format("%02d", day);
+        String date = formatDay + "/" + month + "/" + year;
         
+        if(details.isEmpty()){
+            details = "None";
+        }
         Payment payment = new Payment(date, person_entry, details, member, amount);
         
         recordPayment(payment);
         
         JOptionPane.showMessageDialog(null, "Payment record success!");
+        
+        this.dispose();
         
     }//GEN-LAST:event_btn_recordActionPerformed
 
@@ -300,7 +327,7 @@ public class PayMemberFeePage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PayMemberFeePage(member).setVisible(true);
+                new PayMemberFeePage(member, newMember, registrationPage).setVisible(true);
             }
         });
     }
